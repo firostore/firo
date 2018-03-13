@@ -25,8 +25,7 @@
 		8D67AEB1203D42DB00837BB2 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D67AEB0203D42DB00837BB2 /* PostViewController.swift */; };
 		8D8724062055F7170056C654 /* post-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D8724052055F7170056C654 /* post-placeholder.png */; };
 		8D8724092056D69C0056C654 /* profile-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D8724082056D69C0056C654 /* profile-placeholder.png */; };
-		8D87240B2058138E0056C654 /* BuyingCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D87240A2058138E0056C654 /* BuyingCollectionViewController.swift */; };
-		8D87240D2058139E0056C654 /* SellingCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D87240C2058139E0056C654 /* SellingCollectionViewController.swift */; };
+		8D87241120582EAD0056C654 /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D87241020582EAD0056C654 /* ProfileCollectionViewCell.swift */; };
 		8DE451B82044C91000E60C74 /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE451B72044C91000E60C74 /* FeedTableViewController.swift */; };
 		8DE451BA2044C9FC00E60C74 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE451B92044C9FC00E60C74 /* FeedTableViewCell.swift */; };
 		8DE451BC2045022600E60C74 /* iconbeast lite 200 - png in Resources */ = {isa = PBXBuildFile; fileRef = 8DE451BB2045022600E60C74 /* iconbeast lite 200 - png */; };
@@ -104,8 +103,7 @@
 		8D67AEB0203D42DB00837BB2 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		8D8724052055F7170056C654 /* post-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "post-placeholder.png"; sourceTree = "<group>"; };
 		8D8724082056D69C0056C654 /* profile-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-placeholder.png"; sourceTree = "<group>"; };
-		8D87240A2058138E0056C654 /* BuyingCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyingCollectionViewController.swift; sourceTree = "<group>"; };
-		8D87240C2058139E0056C654 /* SellingCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellingCollectionViewController.swift; sourceTree = "<group>"; };
+		8D87241020582EAD0056C654 /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		8DE451B72044C91000E60C74 /* FeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewController.swift; sourceTree = "<group>"; };
 		8DE451B92044C9FC00E60C74 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		8DE451BB2045022600E60C74 /* iconbeast lite 200 - png */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "iconbeast lite 200 - png"; sourceTree = "<group>"; };
@@ -204,8 +202,6 @@
 				8D28FAE7203CF5D1005FACC3 /* ViewController.swift */,
 				8D28FB89203D20F8005FACC3 /* UserTableViewController.swift */,
 				8D28FAE9203CF5D1005FACC3 /* Main.storyboard */,
-				8D87240A2058138E0056C654 /* BuyingCollectionViewController.swift */,
-				8D87240C2058139E0056C654 /* SellingCollectionViewController.swift */,
 				8DE451EB204B82C500E60C74 /* PostCollectionReusableView.swift */,
 				8DE451E9204B71DA00E60C74 /* PostCollectionViewCell.swift */,
 				8DE451E7204B718D00E60C74 /* PostCollectionViewController.swift */,
@@ -244,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				8DE451ED204CEB2500E60C74 /* ProfileViewController.swift */,
+				8D87241020582EAD0056C654 /* ProfileCollectionViewCell.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -548,7 +545,7 @@
 			files = (
 				8D67AEB1203D42DB00837BB2 /* PostViewController.swift in Sources */,
 				8DE451EC204B82C500E60C74 /* PostCollectionReusableView.swift in Sources */,
-				8D87240D2058139E0056C654 /* SellingCollectionViewController.swift in Sources */,
+				8D87241120582EAD0056C654 /* ProfileCollectionViewCell.swift in Sources */,
 				8DE451EE204CEB2500E60C74 /* ProfileViewController.swift in Sources */,
 				8DE451BA2044C9FC00E60C74 /* FeedTableViewCell.swift in Sources */,
 				8D28FAE8203CF5D1005FACC3 /* ViewController.swift in Sources */,
@@ -559,7 +556,6 @@
 				8DE451E8204B718D00E60C74 /* PostCollectionViewController.swift in Sources */,
 				8D28FB8A203D20F8005FACC3 /* UserTableViewController.swift in Sources */,
 				8D28FAE6203CF5D1005FACC3 /* AppDelegate.swift in Sources */,
-				8D87240B2058138E0056C654 /* BuyingCollectionViewController.swift in Sources */,
 				8DE451F82050384F00E60C74 /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

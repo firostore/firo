@@ -19,15 +19,15 @@ class CollectionViewCell: UICollectionViewCell {
     
     var isEditing: Bool = false {
         didSet {
-            selectionImage.isHidden = !isEditing
+//            selectionImage.isHidden = !isEditing
         }
     }
     
     override var isSelected: Bool {
         didSet {
-            if isEditing {
-                selectionImage.image = isSelected ? UIImage(named: "Checked") : UIImage(named: "Unchecked")
-            }
+//            if isEditing {
+//                selectionImage.image = isSelected ? UIImage(named: "Checked") : UIImage(named: "Unchecked")
+//            }
         }
     }
 }
