@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Parse
+let themeColor = UIColor(red: 0.01, green: 0.41, blue: 0.22, alpha: 1.0) //greenish color
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +18,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        let configuration = ParseClientConfiguration { //configures parse with exisiting server
+            $0.applicationId = "37fdef082937aab342cf2d6eac0e0e0d7c0667c6"
+            $0.clientKey = "fd3262cc172f3b6a88847e21e6b9e5b98b7979ab"
+            $0.server = "http://ec2-52-54-149-34.compute-1.amazonaws.com/parse"
+        }
+        
+        Parse.initialize(with:configuration)
+        
+        window?.tintColor = themeColor //sets general UI theme color to themeColor
+
+        
         // Override point for customization after application launch.
         return true
     }
