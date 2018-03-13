@@ -26,20 +26,17 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var deleteButton: UIBarButtonItem!
     
     @IBAction func deleteSelected(_ sender: Any) {
-        if let selected = collectionView.indexPathsForSelectedItems {
-            let items = selected.map{$0.item}.sorted().reversed() //in order to safely remove from list (think about it)
+//        if let selected = collectionView.indexPathsForSelectedItems {
+//            let items = selected.map{$0.item}.sorted().reversed() //in order to safely remove from list (think about it)
 //            for item in items {
 //                collectionData.remove(at: item)
 //            }
-            collectionView.deleteItems(at: selected)
-            navigationController?.isToolbarHidden = true
-        }
+//            collectionView.deleteItems(at: selected)
+//            navigationController?.isToolbarHidden = true
+//        }
     }
     @IBAction func addItem() {
-//        let text = "\(collectionData.count + 1)"
-//        collectionData.append(text)
-//        let index = IndexPath(row: collectionData.count - 1, section: 0)
-//        collectionView.insertItems(at: [index])
+
     }
     @objc func refresh() {
         addItem()

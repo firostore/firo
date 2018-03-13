@@ -26,6 +26,11 @@
 		8D8724062055F7170056C654 /* post-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D8724052055F7170056C654 /* post-placeholder.png */; };
 		8D8724092056D69C0056C654 /* profile-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D8724082056D69C0056C654 /* profile-placeholder.png */; };
 		8D87241120582EAD0056C654 /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D87241020582EAD0056C654 /* ProfileCollectionViewCell.swift */; };
+		8D872413205835490056C654 /* EditDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D872412205835490056C654 /* EditDetailsViewController.swift */; };
+		8D91412D2058599300B988A6 /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D91412C2058599300B988A6 /* PostDetailTableViewController.swift */; };
+		8D91413520585A6E00B988A6 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D91413420585A6E00B988A6 /* CategoryTableViewController.swift */; };
+		8D91413720585A7C00B988A6 /* LocationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D91413620585A7C00B988A6 /* LocationTableViewController.swift */; };
+		8D91413920585FC000B988A6 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D91413820585FC000B988A6 /* CategoryTableViewCell.swift */; };
 		8DE451B82044C91000E60C74 /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE451B72044C91000E60C74 /* FeedTableViewController.swift */; };
 		8DE451BA2044C9FC00E60C74 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE451B92044C9FC00E60C74 /* FeedTableViewCell.swift */; };
 		8DE451BC2045022600E60C74 /* iconbeast lite 200 - png in Resources */ = {isa = PBXBuildFile; fileRef = 8DE451BB2045022600E60C74 /* iconbeast lite 200 - png */; };
@@ -104,6 +109,11 @@
 		8D8724052055F7170056C654 /* post-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "post-placeholder.png"; sourceTree = "<group>"; };
 		8D8724082056D69C0056C654 /* profile-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-placeholder.png"; sourceTree = "<group>"; };
 		8D87241020582EAD0056C654 /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
+		8D872412205835490056C654 /* EditDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDetailsViewController.swift; sourceTree = "<group>"; };
+		8D91412C2058599300B988A6 /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
+		8D91413420585A6E00B988A6 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
+		8D91413620585A7C00B988A6 /* LocationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewController.swift; sourceTree = "<group>"; };
+		8D91413820585FC000B988A6 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
 		8DE451B72044C91000E60C74 /* FeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewController.swift; sourceTree = "<group>"; };
 		8DE451B92044C9FC00E60C74 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		8DE451BB2045022600E60C74 /* iconbeast lite 200 - png */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "iconbeast lite 200 - png"; sourceTree = "<group>"; };
@@ -241,6 +251,7 @@
 			children = (
 				8DE451ED204CEB2500E60C74 /* ProfileViewController.swift */,
 				8D87241020582EAD0056C654 /* ProfileCollectionViewCell.swift */,
+				8D872412205835490056C654 /* EditDetailsViewController.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -295,6 +306,10 @@
 			isa = PBXGroup;
 			children = (
 				8D67AEB0203D42DB00837BB2 /* PostViewController.swift */,
+				8D91412C2058599300B988A6 /* PostDetailTableViewController.swift */,
+				8D91413820585FC000B988A6 /* CategoryTableViewCell.swift */,
+				8D91413420585A6E00B988A6 /* CategoryTableViewController.swift */,
+				8D91413620585A7C00B988A6 /* LocationTableViewController.swift */,
 			);
 			name = post;
 			sourceTree = "<group>";
@@ -543,17 +558,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D91413520585A6E00B988A6 /* CategoryTableViewController.swift in Sources */,
 				8D67AEB1203D42DB00837BB2 /* PostViewController.swift in Sources */,
+				8D91413720585A7C00B988A6 /* LocationTableViewController.swift in Sources */,
 				8DE451EC204B82C500E60C74 /* PostCollectionReusableView.swift in Sources */,
 				8D87241120582EAD0056C654 /* ProfileCollectionViewCell.swift in Sources */,
 				8DE451EE204CEB2500E60C74 /* ProfileViewController.swift in Sources */,
 				8DE451BA2044C9FC00E60C74 /* FeedTableViewCell.swift in Sources */,
 				8D28FAE8203CF5D1005FACC3 /* ViewController.swift in Sources */,
 				8DE451B82044C91000E60C74 /* FeedTableViewController.swift in Sources */,
+				8D91412D2058599300B988A6 /* PostDetailTableViewController.swift in Sources */,
 				8DE451EA204B71DA00E60C74 /* PostCollectionViewCell.swift in Sources */,
 				8DE451F5204DA3B900E60C74 /* HomeViewController.swift in Sources */,
 				8DE451FA20504DAD00E60C74 /* CollectionViewCell.swift in Sources */,
 				8DE451E8204B718D00E60C74 /* PostCollectionViewController.swift in Sources */,
+				8D91413920585FC000B988A6 /* CategoryTableViewCell.swift in Sources */,
+				8D872413205835490056C654 /* EditDetailsViewController.swift in Sources */,
 				8D28FB8A203D20F8005FACC3 /* UserTableViewController.swift in Sources */,
 				8D28FAE6203CF5D1005FACC3 /* AppDelegate.swift in Sources */,
 				8DE451F82050384F00E60C74 /* DetailsViewController.swift in Sources */,

@@ -21,6 +21,25 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
 
     @IBOutlet weak var postDescription: UITextView!
     
+    @IBOutlet weak var acceptsOffers: UISwitch!
+    @IBOutlet weak var priceField: UITextField!
+    var condition: String!
+    var location: String!
+    var category: String!
+    
+    @IBOutlet weak var conditionLabel: UILabel!
+    @IBOutlet weak var conditionArrow: UIImageView!
+
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var locationArrow: UIImageView!
+    
+    @IBOutlet weak var categoryArrow: UIImageView!
+    @IBOutlet weak var categoryLabel: UILabel!
+    
+    @IBAction func unwindSegue(_ sender: UIStoryboardSegue) {
+        
+    }
+
     func displayAlert(title:String, message:String) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
@@ -85,7 +104,17 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
             
             post["description"] = postDescription.text
             
+            post["price"] = priceField.text
+            
             post["userid"] = PFUser.current()?.objectId
+            
+            post["condition"] = conditionLabel.text
+            
+            post["category"] = categoryLabel.text
+            
+            post["location"] = locationLabel.text
+            
+            post["offers"] = acceptsOffers.isOn
             
             if let imageData = UIImagePNGRepresentation(image) {
                 
@@ -124,10 +153,26 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { //called anytime a segue is called
+        if segue.identifier == "showCondition"{ //passing values over if the segue is the DetailSegue
+            if let dest = segue.destination as? PostDetailTableViewController,
+                let id = sender as? Int {
+                //                        dest.priceValue = prices[index.row]
+                if id == 1 {
+                    dest.typeId = 1
+                } else if id == 2 {
+                    dest.typeId = 2
+                } else if id == 3{
+                    dest.typeId = 3
+                }
+                
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         postDescription.layer.borderColor = UIColor.gray.cgColor
         postDescription.layer.borderWidth = 1.0
         postDescription.layer.cornerRadius = 5
@@ -136,15 +181,52 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
         postTitle.layer.borderWidth = 1.0
         postTitle.layer.cornerRadius = 5
         
+        let tapCondition = UITapGestureRecognizer(target: self, action: #selector(PostViewController.chooseCondition))
+        let tapCategory = UITapGestureRecognizer(target: self, action: #selector(PostViewController.chooseCategory))
+        let tapLocation = UITapGestureRecognizer(target: self, action: #selector(PostViewController.chooseLocation))
         
+        conditionLabel.addGestureRecognizer(tapCondition)
+        categoryLabel.addGestureRecognizer(tapCategory)
+        locationLabel.addGestureRecognizer(tapLocation)
 
         // Do any additional setup after loading the view.
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if condition != nil {
+            conditionLabel.text = condition
+        }
+        if category != nil {
+            categoryLabel.text = category
+        }
+        if location != nil {
+            locationLabel.text = location
+        }
+    }
+    
+    var tableId: Int!
+    
+    func chooseCondition(sender:UITapGestureRecognizer) {
+        tableId = 1
+        performSegue(withIdentifier: "showCondition", sender: tableId)
+    }
+    
+    func chooseCategory(sender:UITapGestureRecognizer) {
+        tableId = 2
+        performSegue(withIdentifier: "showCondition", sender: tableId)
+    }
+    
+    func chooseLocation(sender:UITapGestureRecognizer) {
+        tableId = 3
+        performSegue(withIdentifier: "showCondition", sender: tableId)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
     
 
     /*

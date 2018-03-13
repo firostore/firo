@@ -95,6 +95,11 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     }
     
     var images = [PFFile]()
+    var users = [String: String]()
+    var descriptions = [String]()
+    var titles = [String]()
+    var prices = [Float]()
+    var usernames = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,6 +141,9 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
                 for post in posts {
                     
                     print("ONE POST RETRIEVED")
+                    self.descriptions.append(post["description"] as! String)
+                    self.usernames.append(post["userid"] as! String)
+                    self.titles.append(post["title"] as! String)
                     self.images.append(post["imageFile"] as! PFFile)
                     self.sellingCollectionView?.reloadData()
                     
@@ -169,15 +177,15 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { //called anytime a segue is called
         if segue.identifier == "ProfileDetailSegue"{ //passing values over if the segue is the DetailSegue
-//            if let dest = segue.destination as? DetailsViewController,
-//                let index = sender as? IndexPath {
-//                //                        dest.priceValue = prices[index.row]
-//                dest.mainImage = images[index.row]
-//                dest.titleValue = titles[index.row]
-//                dest.userId = usernames[index.row]
-//                dest.descriptionValue = descriptions[index.row]
-//                
-//            }
+            if let dest = segue.destination as? EditDetailsViewController,
+                let index = sender as? IndexPath {
+                //                        dest.priceValue = prices[index.row]
+                dest.mainImage = images[index.row]
+                dest.titleValue = titles[index.row]
+                dest.userId = usernames[index.row]
+                dest.descriptionValue = descriptions[index.row]
+                
+            }
         }
     }
     
