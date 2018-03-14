@@ -93,6 +93,10 @@ class ViewController: UIViewController {
                                         // There was a problem, check error.description
                                     }
                                 }
+                                var wlist = PFObject(className: "WatchList")
+                                wlist["user"] = user.objectId
+                                wlist["list"] = []
+                                wlist.saveInBackground()
                                 
                             }
                         }

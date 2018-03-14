@@ -11,11 +11,20 @@ import Parse
 
 class DetailsViewController: UIViewController {
     
-    var titleValue: String!
-    var descriptionValue: String!
-    var priceValue: Float!
-    var userId: String!
+//    var titleValue: String!
     var mainImage: PFFile!
+//    var descriptionValue: String!
+//    var priceValue: Float!
+//    var userImage: PFFile!
+//    var userId: String!
+//    
+//    var acceptOffer: Bool!
+//    var categoryValue: String!
+//    var conditionValue: String!
+//    var locationValue: String!
+    
+    var post = PFObject(className: "Post")
+
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -23,12 +32,57 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var price: UILabel!
     @IBOutlet weak var userView: UIImageView!
     @IBOutlet weak var userText: UILabel!
+    @IBOutlet weak var offerLabel: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var conditionLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
+
+    var watchList = [String]()
+    
+    @IBAction func addToWatchList(_ sender: Any) {
+
+        var query = PFQuery(className:"WatchList") //Query to edit the watchlist
+        query.whereKey("user", equalTo:PFUser.current()?.objectId)
+        query.getFirstObjectInBackground(block: { (object, error) in
+            if error == nil {
+                // The find succeeded.
+                if let wl = object {
+                    self.watchList = wl["list"] as! [String]
+                    print(self.post)
+                    if(!self.watchList.contains(self.post.objectId!)){ //double checks if the user is already watching this post
+                        self.watchList.append(self.post.objectId!)
+                    }
+
+                    wl["list"] = self.watchList
+                    wl.saveInBackground()
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!)")
+            }
+        })
+
+    }
+    
+    @IBAction func contactSeller(_ sender: Any) {
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleLabel.text = titleValue
-        descriptionText.text = descriptionValue
-        price.text = "\(priceValue)"
+        
+        titleLabel.text = self.post["title"] as! String?
+        descriptionText.text = self.post["description"] as! String!
+        price.text = "\(post["price"])"
+        userText.text = post["userid"] as! String!
+        if post["offers"] as! Bool == true {
+            offerLabel.text = "Yes"
+        } else {
+            offerLabel.text = "No"
+        }
+        categoryLabel.text = post["category"] as! String?
+        conditionLabel.text = post["condition"] as! String?
+        locationLabel.text = post["location"] as! String?
+        
         
         mainImage.getDataInBackground { (data, error) in //indexPath.row = keeps track of which index the table is populating
             
@@ -41,6 +95,33 @@ class DetailsViewController: UIViewController {
                 }
             }
         }
+        
+        let query = PFQuery(className:"ProfilePicture")
+        query.whereKey("user", equalTo: post["userid"] as! String?)
+        query.getFirstObjectInBackground(block: { (object, error) in
+            if let profile = object {
+                if profile["image"] != nil{
+                    
+                    let userImage = profile["image"] as! PFFile
+                    userImage.getDataInBackground { (data, error) in //indexPath.row = keeps track of which index the table is populating
+                        
+                        if let imageData = data {
+                            
+                            if let imageToDisplay = UIImage(data: imageData){
+                                
+                                self.userView.image = imageToDisplay
+                                
+                            }
+                        }
+                    }
+                    
+                } else {
+                    
+                }
+                
+            }
+            
+        })
         // Do any additional setup after loading the view.
     }
 

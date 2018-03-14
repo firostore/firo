@@ -17,6 +17,12 @@ class HomeViewController: UIViewController {
     var prices = [Float]()
     var usernames = [String]()
     var images = [PFFile]()
+    var offerBooleans = [Bool]()
+    var conditions = [String]()
+    var locations = [String]()
+    var categories = [String]()
+    
+    var posts = [PFObject]()
     
     var collectionData = ["1", "2", "3", "4", "5", "6"]
     
@@ -89,11 +95,17 @@ class HomeViewController: UIViewController {
             if let posts = objects {
                 
                 for post in posts {
+                    self.posts.append(post as! PFObject)
                     
                     self.descriptions.append(post["description"] as! String)
                     self.usernames.append(post["userid"] as! String)
                     self.titles.append(post["title"] as! String)
                     self.images.append(post["imageFile"] as! PFFile)
+                    self.prices.append(Float(post["price"] as! String)!)
+                    self.offerBooleans.append(post["offers"] as! Bool)
+                    self.conditions.append(post["condition"] as! String)
+                    self.locations.append(post["location"] as! String)
+                    self.categories.append(post["category"] as! String)
                     
                     self.collectionView?.reloadData()
                     
@@ -112,15 +124,17 @@ class HomeViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { //called anytime a segue is called
-            if segue.identifier == "DetailSegue"{ //passing values over if the segue is the DetailSegue
-                if let dest = segue.destination as? DetailsViewController,
-                    let index = sender as? IndexPath {
+        if segue.identifier == "DetailSegue"{ //passing values over if the segue is the DetailSegue
+            if let dest = segue.destination as? DetailsViewController,
+                let index = sender as? IndexPath {
 //                        dest.priceValue = prices[index.row]
-                        dest.mainImage = images[index.row]
-                        dest.titleValue = titles[index.row]
-                        dest.userId = usernames[index.row]
-                        dest.descriptionValue = descriptions[index.row]
-                    
+                    dest.post = posts[index.row]
+//                        dest.titleValue = titles[index.row]
+                    dest.mainImage = images[index.row]
+//                        dest.descriptionValue = descriptions[index.row]
+//                        dest.priceValue = prices[index.row]
+//                        dest.userId = usernames[index.row]
+                
             }
         }
     }
