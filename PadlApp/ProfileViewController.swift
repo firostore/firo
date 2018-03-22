@@ -1,4 +1,4 @@
-//
+ //
 //  ProfileViewController.swift
 //  PadlApp
 //
@@ -95,11 +95,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     }
     
     var images = [PFFile]()
-    var users = [String: String]()
-    var descriptions = [String]()
-    var titles = [String]()
-    var prices = [Float]()
-    var usernames = [String]()
+    var sellingPosts = [PFObject]()
     
     var watchList = [String]() //list of post.objectIds that are on the users watch list
     var watchingImages = [PFFile]()
@@ -107,55 +103,6 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("called view")
-        
-        let query = PFQuery(className:"ProfilePicture")
-        query.whereKey("user", equalTo: PFUser.current()?.objectId)
-        query.getFirstObjectInBackground(block: { (object, error) in
-            if let profile = object {
-                if profile["image"] != nil{
-
-                    let userImage = profile["image"] as! PFFile
-                    userImage.getDataInBackground { (data, error) in //indexPath.row = keeps track of which index the table is populating
-
-                        if let imageData = data {
-
-                            if let imageToDisplay = UIImage(data: imageData){
-                                
-                                self.profileImage.image = imageToDisplay
-                                
-                            }
-                        }
-                    }
-                    
-                } else {
-                
-                }
-                
-            }
-            
-        })
-
-        let postQuery = PFQuery(className: "Post") //retrieves all posts of the user (everything he is selling)
-        postQuery.whereKey("userid", equalTo: PFUser.current()?.objectId)
-        postQuery.findObjectsInBackground(block: {(objects, error) in
-            
-            if let posts = objects {
-                
-                for post in posts {
-                    
-                    print("ONE POST RETRIEVED")
-                    self.descriptions.append(post["description"] as! String)
-                    self.usernames.append(post["userid"] as! String)
-                    self.titles.append(post["title"] as! String)
-                    self.images.append(post["imageFile"] as! PFFile)
-                    self.sellingCollectionView?.reloadData()
-                    
-                }
-            }
-        })
-        
-        
         let sellWidth = self.sellingCollectionView?.frame.size.height //creates layout for sellingCollectionView
         let sellLayout = self.sellingCollectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         
@@ -163,36 +110,6 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         sellLayout.itemSize = CGSize(width: sellWidth!, height: sellWidth!)
         sellLayout.minimumInteritemSpacing = 2
         sellLayout.minimumLineSpacing = 2
-        
-        let watchPostQuery = PFQuery(className: "WatchList") //Retrieves the watch list and updates watch arrays with respective values
-        watchPostQuery.whereKey("user", equalTo: PFUser.current()?.objectId)
-        watchPostQuery.getFirstObjectInBackground(block: {(object, error) in
-            
-            if let watchlist = object {
-
-                self.watchList = watchlist["list"] as! [String]
-                
-                let watchImagesQuery = PFQuery(className: "Post")
-
-                watchImagesQuery.whereKey("objectId", containedIn: self.watchList) //adds each element of watchlist to the arrays
-                watchImagesQuery.findObjectsInBackground(block: {(objects, error) in
-                    
-                    if let posts = objects {
-                        
-                        for post in posts {
-                            
-                            self.watchingPosts.append(post as! PFObject)
-                            self.watchingImages.append(post["imageFile"] as! PFFile)
-                            self.buyingCollectionView?.reloadData()
-                            
-                        }
-                    }
-                })
-            }
-            
-        })
-        
-
 
         
         let buyWidth = self.buyingCollectionView?.frame.size.height //creates layout for buyingCollectionView
@@ -210,7 +127,94 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         
         // Do any additional setup after loading the view.
     }
-
+    override func viewDidAppear(_ animated: Bool) {
+        print("new view")
+        //sets all variables to zero before assinging more
+        self.watchList = []
+        self.watchingImages = []
+        self.watchingPosts = []
+        self.sellingPosts = []
+        self.images = []
+        
+        let query = PFQuery(className:"ProfilePicture")
+        query.whereKey("user", equalTo: PFUser.current()?.objectId)
+        query.getFirstObjectInBackground(block: { (object, error) in
+            if let profile = object {
+                if profile["image"] != nil{
+                    
+                    let userImage = profile["image"] as! PFFile
+                    userImage.getDataInBackground { (data, error) in //indexPath.row = keeps track of which index the table is populating
+                        
+                        if let imageData = data {
+                            
+                            if let imageToDisplay = UIImage(data: imageData){
+                                
+                                self.profileImage.image = imageToDisplay
+                                
+                            }
+                        }
+                    }
+                    
+                } else {
+                    
+                }
+                
+            }
+            
+        })
+        
+        let postQuery = PFQuery(className: "Post") //retrieves all posts of the user (everything he is selling)
+        postQuery.whereKey("userid", equalTo: PFUser.current()?.objectId)
+        postQuery.findObjectsInBackground(block: {(objects, error) in
+            
+            if let posts = objects {
+                
+                for post in posts {
+                    
+                    self.sellingPosts.append(post as! PFObject)
+                    self.images.append(post["imageFile"] as! PFFile)
+                    self.sellingCollectionView?.reloadData()
+                    
+                }
+            }
+        })
+        
+        let watchPostQuery = PFQuery(className: "WatchList") //Retrieves the watch list and updates watch arrays with respective values
+        watchPostQuery.whereKey("user", equalTo: PFUser.current()?.objectId)
+        watchPostQuery.getFirstObjectInBackground(block: {(object, error) in
+            
+            if let watchlist = object {
+                
+                self.watchList = watchlist["list"] as! [String]
+                
+                let watchImagesQuery = PFQuery(className: "Post")
+                
+                watchImagesQuery.whereKey("objectId", containedIn: self.watchList) //adds each element of watchlist to the arrays
+                watchImagesQuery.findObjectsInBackground(block: {(objects, error) in
+                    
+                    if let posts = objects {
+                        
+                        for post in posts {
+                            
+                            self.watchingPosts.append(post as! PFObject)
+                            self.watchingImages.append(post["imageFile"] as! PFFile)
+                            self.buyingCollectionView?.reloadData()
+                            
+                        }
+                    }
+                })
+            }
+            
+        })
+        print(self.images)
+        print(self.sellingPosts)
+        print(self.watchingPosts)
+        
+        self.sellingCollectionView?.reloadData()
+        self.buyingCollectionView?.reloadData()
+        print("rlaoded")
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -218,16 +222,18 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { //called anytime a segue is called
-        if segue.identifier == "ProfileSellingSegue"{ //passing values over if the segue is the DetailSegue
-            if let dest = segue.destination as? EditDetailsViewController,
+        print(segue.identifier)
+        if segue.identifier == "ProfileDetailsSegue"{ //passing values over if the segue is the DetailSegue
+            print("right track")
+            print(segue.destination)
+            if let dest = segue.destination as? DetailsViewController,
                 let index = sender as? IndexPath {
-                //                        dest.priceValue = prices[index.row]
+                print("ypppp", images[index.row])
                 dest.mainImage = images[index.row]
-                dest.titleValue = titles[index.row]
-                dest.userId = usernames[index.row]
-                dest.descriptionValue = descriptions[index.row]
+                dest.post = sellingPosts[index.row]
                 
             }
+            print("da fuck")
         } else if segue.identifier == "ProfileWatchingSegue"{ //passing values over if the segue is the DetailSegue
             if let dest = segue.destination as? DetailsViewController,
                 let index = sender as? IndexPath {
@@ -241,6 +247,18 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
                 
             }
         }
+//        else if segue.identifier == "EditPostSegue"{ //passing values over if the segue is the DetailSegue
+//            if let dest = segue.destination as? DetailsViewController,
+//                let index = sender as? IndexPath {
+//                
+//                dest.post = sellingPosts[index.row]
+//                
+//                dest.mainImage = images[index.row]
+//                
+//                
+//            }
+//        }
+        
     }
     
     /*
@@ -256,12 +274,13 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     // MARK: UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { //numberOfItemsInSection (returns number of rows)
-
+        print("reloading views at core")
         if collectionView == self.sellingCollectionView {
             return images.count
         } else {
             return watchList.count
         }
+    
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell { //cellForItemAt (returns cell for index of collectionView
@@ -315,7 +334,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         //        }
 
         if collectionView == sellingCollectionView {
-            performSegue(withIdentifier: "ProfileSellingSegue", sender: indexPath)
+            performSegue(withIdentifier: "ProfileDetailsSegue", sender: indexPath)
         } else {
             performSegue(withIdentifier: "ProfileWatchingSegue", sender: indexPath)
         }

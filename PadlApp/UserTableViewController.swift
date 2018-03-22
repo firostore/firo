@@ -9,13 +9,15 @@
 import UIKit
 import Parse
 
-class UserTableViewController: UITableViewController {
+class UserTableViewController: UITableViewController, UISearchResultsUpdating {
     
-    var usernames = [""]
+    var titles = [""]
     var objectIds = [""]
     var isFollowing = ["" : true]
     
     var refresher: UIRefreshControl = UIRefreshControl()
+    var searchController = UISearchController(searchResultsController: nil)
+
     
     @IBAction func logoutUser(_ sender: Any) {
         
@@ -26,66 +28,34 @@ class UserTableViewController: UITableViewController {
         
     }
     
-    @objc func updateTable() {
-        let query = PFUser.query()
+    @objc func updateTable(searchInput: String) {
+        let query = PFQuery(className: "Post")
         
-        query?.whereKey("username", notEqualTo: PFUser.current()?.username)
-        
-        query?.findObjectsInBackground(block: { (users, error) in
+        query.findObjectsInBackground(block: { (objects, error) in
             
             if error != nil {
                 
                 print(error)
                 
-            } else if let users = users {
-                
-                self.usernames.removeAll()
-                self.objectIds.removeAll()
-                self.isFollowing.removeAll()
-                
-                for object in users {
-                    
-                    if let user = object as? PFUser {
-                        
-                        if let username = user.username {
-                            if let objectId = user.objectId {
-                                
-                                let usernameArray = username.components(separatedBy: "@")
-                                
-                                self.usernames.append(usernameArray[0])
-                                self.objectIds.append(user.objectId!)
-                                
-                                let query = PFQuery(className: "Following")
-                                
-                                query.whereKey("follower", equalTo: PFUser.current()?.objectId)
-                                query.whereKey("following", contains: objectId)
-                                
-                                query.findObjectsInBackground(block: { (objects, error) in
-                                    
-                                    if let objects = objects {
-                                        
-                                        if objects.count > 0 {
-                                            self.isFollowing[objectId] = true
-                                        } else {
-                                            self.isFollowing[objectId] = false
-                                        }
-                                        
-                                        if self.usernames.count == self.isFollowing.count {
-                                            
-                                            self.tableView.reloadData()
-                                            
-                                            self.refresher.endRefreshing()
-                                            
-                                        }
-                                        
-                                    }
-                                })
-                                
-                            }
-                            
+            } else {
+                if let posts = objects {
+                    for post in posts {
+                        self.title = post["title"] as! String?
+                        print("retrieved some posts!!")
+                        if (self.title?.lowercased().contains(searchInput.lowercased()))!{
+                            print("found one!!")
+                            self.titles.append(self.title!)
+                            self.objectIds.append(post.objectId!)
+                        } else if searchInput == "" {
+//                            self.titles.append(self.title!)
+//                            self.objectIds.append(post.objectId!)
                         }
+
                         
                     }
+                    
+                    self.tableView.reloadData()
+                    self.refresher.endRefreshing()
                 }
                 
             }
@@ -95,7 +65,7 @@ class UserTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updateTable()
+        updateTable(searchInput: "")
         
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
         
@@ -103,8 +73,59 @@ class UserTableViewController: UITableViewController {
         
         tableView.addSubview(refresher)
         
+        definesPresentationContext = true
+
+//        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+//        searchController.searchBar.delegate = self
+//        searchController.searchBar.sizeToFit()
+//        searchController.searchBar.searchBarStyle = UISearchBarStyle.minimal
+        tableView.tableHeaderView = searchController.searchBar
+    
+        searchController.searchResultsUpdater = self
+        
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //resets tableview when view is refreshed
+        searchController.searchBar.text = nil
+        titles = []
+        objectIds = []
+        
+        self.tableView.reloadData()
+    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        searchController.isActive = false
+//        searchController.searchBar.removeFromSuperview()
+//        definesPresentationContext = false
+//    }
+//    
+    func updateSearchResults(for searchController: UISearchController) {
+        print("called update search")
+        if let searchText = searchController.searchBar.text, !searchText.isEmpty {
+//            filteredNFLTeams = unfilteredNFLTeams.filter { team in
+//                return team.lowercased().contains(searchText.lowercased())
+//            }
+            titles = []
+            objectIds = []
+            updateTable(searchInput: searchText)
+            print("searching for ", searchText)
+            
+        } else {
+//            updateTable(searchInput: "")
+        }
+//        tableView.reloadData()
+    }
+    
+    
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        print("called update search")
+//        
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -120,24 +141,24 @@ class UserTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return usernames.count
+        return titles.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
-        cell.textLabel?.text = usernames[indexPath.row]
+        cell.textLabel?.text = titles[indexPath.row]
         
-        if let followsBoolean = isFollowing[objectIds[indexPath.row]] {
-            
-            if followsBoolean {
-                
-                cell.accessoryType = UITableViewCellAccessoryType.checkmark
-                
-            }
-        }
-    
+//        if let followsBoolean = isFollowing[objectIds[indexPath.row]] {
+//            
+//            if followsBoolean {
+//                
+//                cell.accessoryType = UITableViewCellAccessoryType.checkmark
+//                
+//            }
+//        }
+//    
         return cell
     }
     
@@ -145,53 +166,53 @@ class UserTableViewController: UITableViewController {
         
         let cell = tableView.cellForRow(at: indexPath)
         
-        print("clcikeddied")
-        
-        if let followsBoolean = isFollowing[objectIds[indexPath.row]] {
-            
-            if followsBoolean {
-                
-                isFollowing[objectIds[indexPath.row]] = false
-                
-                cell?.accessoryType = UITableViewCellAccessoryType.none
-                
-                let query = PFQuery(className: "Following")
-                
-                query.whereKey("follower", equalTo: PFUser.current()?.objectId)
-                query.whereKey("following", equalTo: objectIds[indexPath.row])
-                
-                query.findObjectsInBackground(block: { (objects, error) in
-                    
-                    if let objects = objects {
-                        
-                        for object in objects {
-                            
-                            object.deleteInBackground()
-                            
-                        }
-                        
-                    }
-                    
-                })
-                
-            } else {
-                
-                isFollowing[objectIds[indexPath.row]] = true
-                
-                cell?.accessoryType = UITableViewCellAccessoryType.checkmark
-                
-                let following = PFObject(className: "Following")
-                
-                following["follower"] = PFUser.current()?.objectId
-                
-                following["following"] = objectIds[indexPath.row]
-                
-                following.saveInBackground()
-                
-                
-            }
-            
-        }
+//        print("clcikeddied")
+//        
+//        if let followsBoolean = isFollowing[objectIds[indexPath.row]] {
+//            
+//            if followsBoolean {
+//                
+//                isFollowing[objectIds[indexPath.row]] = false
+//                
+//                cell?.accessoryType = UITableViewCellAccessoryType.none
+//                
+//                let query = PFQuery(className: "Following")
+//                
+//                query.whereKey("follower", equalTo: PFUser.current()?.objectId)
+//                query.whereKey("following", equalTo: objectIds[indexPath.row])
+//                
+//                query.findObjectsInBackground(block: { (objects, error) in
+//                    
+//                    if let objects = objects {
+//                        
+//                        for object in objects {
+//                            
+//                            object.deleteInBackground()
+//                            
+//                        }
+//                        
+//                    }
+//                    
+//                })
+//                
+//            } else {
+//                
+//                isFollowing[objectIds[indexPath.row]] = true
+//                
+//                cell?.accessoryType = UITableViewCellAccessoryType.checkmark
+//                
+//                let following = PFObject(className: "Following")
+//                
+//                following["follower"] = PFUser.current()?.objectId
+//                
+//                following["following"] = objectIds[indexPath.row]
+//                
+//                following.saveInBackground()
+//                
+//                
+//            }
+//            
+//        }
     }
 
 //    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

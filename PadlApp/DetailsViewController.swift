@@ -37,21 +37,70 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var conditionLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
 
+    @IBOutlet weak var deleteButton: UIButton!
+    
+    @IBOutlet weak var watchButton: UIButton!
+    
     var watchList = [String]()
+    var inWatchList: Bool!
+    var usersPost: Bool! //If true, the post is the users and the delete button must be displayed
+    
+    @IBAction func deleteItem(_ sender: Any) {
+        
+        var query = PFQuery(className:"WatchList") //Query to edit the watchlist
+        query.findObjectsInBackground(block: { (objects, error) in
+            if error == nil {
+                // The find succeeded.
+                for object in objects! {
+                    print("newone", object["list"])
+                    if self.post.objectId == object["list"] as? String {
+                        var new_list = object["list"] as? [String]
+                        object["list"] = new_list!.filter() { $0 != self.post.objectId }
+                        object.saveInBackground()
+//                        object["list"] = list["list"].filter() { $0 !== self.post.objectId }
+//                        print("yo")
+                    }
+                    print(object["list"])
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!)")
+            }
+        })
+        
+        post.deleteInBackground()
+
+        self.navigationController?.popViewController(animated: true)
+    }
     
     @IBAction func addToWatchList(_ sender: Any) {
-
+        
         var query = PFQuery(className:"WatchList") //Query to edit the watchlist
         query.whereKey("user", equalTo:PFUser.current()?.objectId)
         query.getFirstObjectInBackground(block: { (object, error) in
             if error == nil {
                 // The find succeeded.
                 if let wl = object {
+                    print("addingggg")
+                    
+                    print(self.inWatchList)
                     self.watchList = wl["list"] as! [String]
-                    print(self.post)
-                    if(!self.watchList.contains(self.post.objectId!)){ //double checks if the user is already watching this post
-                        self.watchList.append(self.post.objectId!)
+                    if !self.inWatchList {
+                        if(!self.watchList.contains(self.post.objectId!)){ //double checks if the user is already watching this post
+                            self.watchList.append(self.post.objectId!)
+                            self.watchButton.setTitle("Remove from watchlist", for: [])
+                            self.inWatchList = true
+                        }
+                    } else {
+//                        print
+//                        ("")
+                        self.watchList = self.watchList.filter() { $0 != self.post.objectId }
+                        self.watchButton.setTitle("Add to Watch List", for: [])
+                        self.inWatchList = false
                     }
+//                    self.watchButton.setTitle("Remove from watchlist", for: [])
+//                    self.view.setNeedsLayout() //updates view
+
 
                     wl["list"] = self.watchList
                     wl.saveInBackground()
@@ -69,6 +118,28 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.inWatchList = false
+        
+        let watchPostQuery = PFQuery(className: "WatchList") //Retrieves the watch list and updates watch arrays with respective values
+        watchPostQuery.whereKey("user", equalTo: PFUser.current()?.objectId)
+        watchPostQuery.getFirstObjectInBackground(block: {(object, error) in
+            
+            if let watchlist = object {
+                
+                if (watchlist["list"] as! [String]).contains((self.post.objectId)!) {
+                    self.watchButton.setTitle("Remove from watchlist", for: [])
+                    self.inWatchList = true
+                    print("already on waitlists")
+                }
+                print(self.inWatchList)
+                
+                
+            }
+        })
+        if self.post["userid"] as! String == PFUser.current()?.objectId {
+            deleteButton.isHidden = false
+        }
         
         titleLabel.text = self.post["title"] as! String?
         descriptionText.text = self.post["description"] as! String!

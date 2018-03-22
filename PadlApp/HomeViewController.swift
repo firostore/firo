@@ -45,31 +45,29 @@ class HomeViewController: UIViewController {
 
     }
     @objc func refresh() {
-        addItem()
+//        self.viewDidLoad()
+        generateData()
+        collectionView.reloadData()
         collectionView.refreshControl?.endRefreshing()
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//        collectionView.setContentInset
-        //Creates refresher for view, calls the addItem() method every time
-        let refresh = UIRefreshControl()
-        refresh.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
+    
+    func generateData() {
         
-        collectionView.refreshControl = refresh
+        users = [:]
+        descriptions = []
+        titles = []
+        prices = []
+        usernames = []
+        images = []
+        offerBooleans = []
+        conditions = []
+        locations = []
+        categories = []
         
-        let width = (collectionView.frame.size.width - 4) / 3
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        
-//        layout.sectionInset = UIEdgeInsets(top: -40, left: 0, bottom: 10, right: 0)
-        layout.itemSize = CGSize(width: width, height: width)
-        layout.minimumInteritemSpacing = 2
-        layout.minimumLineSpacing = 2
-        
-        navigationItem.leftBarButtonItem = editButtonItem
-        navigationController?.isToolbarHidden = true
+        posts = []
         
         let query = PFUser.query()
-        
+        //below code not really used - dictionary mapping users to usernames
         query?.findObjectsInBackground(block: { (objects, error) in
             
             if let users = objects {
@@ -112,10 +110,41 @@ class HomeViewController: UIViewController {
                 }
             }
         })
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+//        collectionView.setContentInset
+        //Creates refresher for view, calls the addItem() method every time
+        let refresh = UIRefreshControl()
+        refresh.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
+        
+        collectionView.refreshControl = refresh
+        
+        let width = (collectionView.frame.size.width - 4) / 3
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        
+//        layout.sectionInset = UIEdgeInsets(top: -40, left: 0, bottom: 10, right: 0)
+        layout.itemSize = CGSize(width: width, height: width)
+        layout.minimumInteritemSpacing = 2
+        layout.minimumLineSpacing = 2
+        
+        navigationItem.leftBarButtonItem = editButtonItem
+        navigationController?.isToolbarHidden = true
+        
+        generateData()
+        
+//        let searchController = UISearchController(searchResultsController: nil)
+//        searchController.searchResultsUpdater = self
+//        searchController.hidesNavigationBarDuringPresentation = false
+//        searchController.dimsBackgroundDuringPresentation = false
+//        collectionView.tableHeaderView = searchController.searchBar
 
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.collectionView?.reloadData()
+    }
 
     
     override func didReceiveMemoryWarning() {
@@ -127,13 +156,11 @@ class HomeViewController: UIViewController {
         if segue.identifier == "DetailSegue"{ //passing values over if the segue is the DetailSegue
             if let dest = segue.destination as? DetailsViewController,
                 let index = sender as? IndexPath {
-//                        dest.priceValue = prices[index.row]
+                    
                     dest.post = posts[index.row]
-//                        dest.titleValue = titles[index.row]
+
                     dest.mainImage = images[index.row]
-//                        dest.descriptionValue = descriptions[index.row]
-//                        dest.priceValue = prices[index.row]
-//                        dest.userId = usernames[index.row]
+
                 
             }
         }
