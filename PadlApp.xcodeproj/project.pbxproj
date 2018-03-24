@@ -61,6 +61,8 @@
 		8DE451F5204DA3B900E60C74 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE451F4204DA3B900E60C74 /* HomeViewController.swift */; };
 		8DE451F82050384F00E60C74 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE451F72050384F00E60C74 /* DetailsViewController.swift */; };
 		8DE451FA20504DAD00E60C74 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE451F920504DAD00E60C74 /* CollectionViewCell.swift */; };
+		961D59E320652E9500FC015E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961D59E220652E9500FC015E /* GradientView.swift */; };
+		961D59E520653A1B00FC015E /* search-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 961D59E420653A1000FC015E /* search-7.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +144,8 @@
 		8DE451F4204DA3B900E60C74 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8DE451F72050384F00E60C74 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		8DE451F920504DAD00E60C74 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		961D59E220652E9500FC015E /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		961D59E420653A1000FC015E /* search-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-7.png"; sourceTree = "<group>"; };
 		F2852D9A1B853378DA34DD83 /* Pods-PadlApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PadlApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PadlApp/Pods-PadlApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -290,6 +294,7 @@
 				8DE451CD2045039500E60C74 /* man-7.png */,
 				8DE451CE2045039500E60C74 /* message-7.png */,
 				8DE451CF2045039500E60C74 /* photo-7.png */,
+				961D59E420653A1000FC015E /* search-7.png */,
 				8DE451D02045039500E60C74 /* plus-simple-7.png */,
 				8DE451D12045039500E60C74 /* update-7.png */,
 				8DE451D22045039500E60C74 /* upload-7.png */,
@@ -320,6 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				8DE451F4204DA3B900E60C74 /* HomeViewController.swift */,
+				961D59E220652E9500FC015E /* GradientView.swift */,
 				8DE451F72050384F00E60C74 /* DetailsViewController.swift */,
 				8DE451F920504DAD00E60C74 /* CollectionViewCell.swift */,
 			);
@@ -406,7 +412,7 @@
 				TargetAttributes = {
 					8D28FAE1203CF5D1005FACC3 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = QC3GS2TDVZ;
+						DevelopmentTeam = 9LH3QR9J34;
 						ProvisioningStyle = Automatic;
 					};
 					8D28FAF5203CF5D2005FACC3 = {
@@ -477,6 +483,7 @@
 				8DE451E02045039500E60C74 /* list-fat-7.png in Resources */,
 				8DE451E42045039500E60C74 /* plus-simple-7.png in Resources */,
 				8DE451E32045039500E60C74 /* photo-7.png in Resources */,
+				961D59E520653A1B00FC015E /* search-7.png in Resources */,
 				8D1EEE12205331EB008E8C2D /* Checked@3x.png in Resources */,
 				8DE451E52045039500E60C74 /* update-7.png in Resources */,
 				8DE451D52045039500E60C74 /* character-e-7.png in Resources */,
@@ -568,6 +575,7 @@
 				8D28FAE8203CF5D1005FACC3 /* ViewController.swift in Sources */,
 				8DE451B82044C91000E60C74 /* FeedTableViewController.swift in Sources */,
 				8D91412D2058599300B988A6 /* PostDetailTableViewController.swift in Sources */,
+				961D59E320652E9500FC015E /* GradientView.swift in Sources */,
 				8DE451EA204B71DA00E60C74 /* PostCollectionViewCell.swift in Sources */,
 				8DE451F5204DA3B900E60C74 /* HomeViewController.swift in Sources */,
 				8DE451FA20504DAD00E60C74 /* CollectionViewCell.swift in Sources */,
@@ -731,7 +739,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = QC3GS2TDVZ;
+				DEVELOPMENT_TEAM = 9LH3QR9J34;
 				INFOPLIST_FILE = PadlApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -750,7 +758,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = QC3GS2TDVZ;
+				DEVELOPMENT_TEAM = 9LH3QR9J34;
 				INFOPLIST_FILE = PadlApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

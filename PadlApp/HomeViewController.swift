@@ -41,6 +41,9 @@ class HomeViewController: UIViewController {
 //            navigationController?.isToolbarHidden = true
 //        }
     }
+    @IBAction func filterPosts(_ sender: Any) {
+        print("filtering!")
+    }
     @IBAction func addItem() {
 
     }
@@ -128,7 +131,7 @@ class HomeViewController: UIViewController {
         layout.minimumInteritemSpacing = 2
         layout.minimumLineSpacing = 2
         
-        navigationItem.leftBarButtonItem = editButtonItem
+//        navigationItem.leftBarButtonItem = editButtonItem
         navigationController?.isToolbarHidden = true
         
         generateData()
@@ -166,24 +169,24 @@ class HomeViewController: UIViewController {
         }
     }
     
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        
-        addButton.isEnabled = !editing
-        deleteButton.isEnabled = editing
-        
-        if !editing {
-            navigationController?.isToolbarHidden = true
-        }
-        collectionView.allowsMultipleSelection = editing
-        
-        let indexes = collectionView.indexPathsForVisibleItems
-        for index in indexes {
-            let cell = collectionView.cellForItem(at: index) as! CollectionViewCell
-            cell.isEditing = editing
-        }
-        
-    }
+//    override func setEditing(_ editing: Bool, animated: Bool) {
+//        super.setEditing(editing, animated: animated)
+//
+//        addButton.isEnabled = !editing
+//        deleteButton.isEnabled = editing
+//
+//        if !editing {
+//            navigationController?.isToolbarHidden = true
+//        }
+//        collectionView.allowsMultipleSelection = editing
+//
+//        let indexes = collectionView.indexPathsForVisibleItems
+//        for index in indexes {
+//            let cell = collectionView.cellForItem(at: index) as! CollectionViewCell
+//            cell.isEditing = editing
+//        }
+//
+//    }
     
 
     /*
@@ -213,7 +216,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 if let imageToDisplay = UIImage(data: imageData){
                     
                     cell.postImage.image = imageToDisplay
-                    
+                    cell.titleLabel.text = self.titles[indexPath.row]
                 }
             }
         }
@@ -225,11 +228,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if !isEditing {
-            performSegue(withIdentifier: "DetailSegue", sender: indexPath)   
-        } else {
-            navigationController?.isToolbarHidden = false
-        }
+//        if !isEditing {
+            performSegue(withIdentifier: "DetailSegue", sender: indexPath)
+//        } else {
+//            navigationController?.isToolbarHidden = false
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

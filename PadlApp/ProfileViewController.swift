@@ -27,6 +27,15 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
 
     }
     
+    @IBAction func logoutUser(_ sender: Any) {
+        
+        PFUser.logOut()
+        
+        performSegue(withIdentifier: "logoutSegue", sender: self)
+        
+        
+    }
+    
     @IBAction func changeProfile(_ sender: Any) {
         
         let imagePicker = UIImagePickerController()

@@ -17,16 +17,6 @@ class UserTableViewController: UITableViewController, UISearchResultsUpdating {
     
     var refresher: UIRefreshControl = UIRefreshControl()
     var searchController = UISearchController(searchResultsController: nil)
-
-    
-    @IBAction func logoutUser(_ sender: Any) {
-        
-        PFUser.logOut()
-        
-        performSegue(withIdentifier: "logoutSegue", sender: self)
-        
-        
-    }
     
     @objc func updateTable(searchInput: String) {
         let query = PFQuery(className: "Post")
@@ -40,11 +30,11 @@ class UserTableViewController: UITableViewController, UISearchResultsUpdating {
             } else {
                 if let posts = objects {
                     for post in posts {
-                        self.title = post["title"] as! String?
+                        var cellText = post["title"] as! String?
                         print("retrieved some posts!!")
                         if (self.title?.lowercased().contains(searchInput.lowercased()))!{
                             print("found one!!")
-                            self.titles.append(self.title!)
+                            self.titles.append(cellText!)
                             self.objectIds.append(post.objectId!)
                         } else if searchInput == "" {
 //                            self.titles.append(self.title!)

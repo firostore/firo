@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import QuartzCore
 
-class PostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class PostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     
     @IBOutlet weak var postButton: UIButton!
@@ -188,6 +188,17 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
         conditionLabel.addGestureRecognizer(tapCondition)
         categoryLabel.addGestureRecognizer(tapCategory)
         locationLabel.addGestureRecognizer(tapLocation)
+        
+        //sets textfield delegate to self
+        postTitle.delegate = self
+        
+        //Looks for single or multiple taps.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PostViewController.dismissKeyboard))
+        
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+        //tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
 
         // Do any additional setup after loading the view.
     }
@@ -202,6 +213,17 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
         if location != nil {
             locationLabel.text = location
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+
+    //Calls this function when the tap is recognized.
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
     
     var tableId: Int!
