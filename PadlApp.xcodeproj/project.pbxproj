@@ -63,6 +63,16 @@
 		8DE451FA20504DAD00E60C74 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE451F920504DAD00E60C74 /* CollectionViewCell.swift */; };
 		961D59E320652E9500FC015E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961D59E220652E9500FC015E /* GradientView.swift */; };
 		961D59E520653A1B00FC015E /* search-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 961D59E420653A1000FC015E /* search-7.png */; };
+		961D59F12066D28300FC015E /* OpenSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 961D59E72066D24200FC015E /* OpenSans-BoldItalic.ttf */; };
+		961D59F22066D28300FC015E /* OpenSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 961D59E82066D25300FC015E /* OpenSans-LightItalic.ttf */; };
+		961D59F32066D28300FC015E /* OpenSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 961D59E92066D25A00FC015E /* OpenSans-ExtraBoldItalic.ttf */; };
+		961D59F42066D28300FC015E /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 961D59EA2066D25F00FC015E /* OpenSans-SemiBold.ttf */; };
+		961D59F52066D28300FC015E /* OpenSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 961D59EB2066D26300FC015E /* OpenSans-ExtraBold.ttf */; };
+		961D59F62066D28300FC015E /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 961D59EC2066D26700FC015E /* OpenSans-Bold.ttf */; };
+		961D59F72066D28300FC015E /* OpenSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 961D59ED2066D26E00FC015E /* OpenSans-Italic.ttf */; };
+		961D59F82066D28300FC015E /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 961D59EE2066D27300FC015E /* OpenSans-Regular.ttf */; };
+		961D59F92066D28300FC015E /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 961D59EF2066D27700FC015E /* OpenSans-Light.ttf */; };
+		961D59FA2066D28300FC015E /* OpenSans-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 961D59F02066D27B00FC015E /* OpenSans-SemiBoldItalic.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +156,16 @@
 		8DE451F920504DAD00E60C74 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		961D59E220652E9500FC015E /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		961D59E420653A1000FC015E /* search-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-7.png"; sourceTree = "<group>"; };
+		961D59E72066D24200FC015E /* OpenSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-BoldItalic.ttf"; sourceTree = "<group>"; };
+		961D59E82066D25300FC015E /* OpenSans-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-LightItalic.ttf"; sourceTree = "<group>"; };
+		961D59E92066D25A00FC015E /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		961D59EA2066D25F00FC015E /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		961D59EB2066D26300FC015E /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
+		961D59EC2066D26700FC015E /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
+		961D59ED2066D26E00FC015E /* OpenSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Italic.ttf"; sourceTree = "<group>"; };
+		961D59EE2066D27300FC015E /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		961D59EF2066D27700FC015E /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		961D59F02066D27B00FC015E /* OpenSans-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		F2852D9A1B853378DA34DD83 /* Pods-PadlApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PadlApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PadlApp/Pods-PadlApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -223,6 +243,7 @@
 				8D28FAEE203CF5D1005FACC3 /* LaunchScreen.storyboard */,
 				8D28FAF1203CF5D1005FACC3 /* Info.plist */,
 				8DE451EF204D077500E60C74 /* icons */,
+				961D59E62066D20E00FC015E /* Fonts */,
 				8DE451BB2045022600E60C74 /* iconbeast lite 200 - png */,
 			);
 			path = PadlApp;
@@ -330,6 +351,23 @@
 				8DE451F920504DAD00E60C74 /* CollectionViewCell.swift */,
 			);
 			name = Home;
+			sourceTree = "<group>";
+		};
+		961D59E62066D20E00FC015E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				961D59EC2066D26700FC015E /* OpenSans-Bold.ttf */,
+				961D59E72066D24200FC015E /* OpenSans-BoldItalic.ttf */,
+				961D59EB2066D26300FC015E /* OpenSans-ExtraBold.ttf */,
+				961D59E92066D25A00FC015E /* OpenSans-ExtraBoldItalic.ttf */,
+				961D59ED2066D26E00FC015E /* OpenSans-Italic.ttf */,
+				961D59EF2066D27700FC015E /* OpenSans-Light.ttf */,
+				961D59E82066D25300FC015E /* OpenSans-LightItalic.ttf */,
+				961D59EE2066D27300FC015E /* OpenSans-Regular.ttf */,
+				961D59EA2066D25F00FC015E /* OpenSans-SemiBold.ttf */,
+				961D59F02066D27B00FC015E /* OpenSans-SemiBoldItalic.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		DCAECEF7B51292DEC4FA5DC9 /* Pods */ = {
@@ -458,9 +496,13 @@
 				8DE451DC2045039500E60C74 /* file-document-7.png in Resources */,
 				8DE451F3204D096A00E60C74 /* IMG_1335.JPG in Resources */,
 				8DE451D82045039500E60C74 /* connect-arrow-right-7.png in Resources */,
+				961D59F22066D28300FC015E /* OpenSans-LightItalic.ttf in Resources */,
+				961D59F12066D28300FC015E /* OpenSans-BoldItalic.ttf in Resources */,
 				8DE451E12045039500E60C74 /* man-7.png in Resources */,
+				961D59FA2066D28300FC015E /* OpenSans-SemiBoldItalic.ttf in Resources */,
 				8DE451E22045039500E60C74 /* message-7.png in Resources */,
 				8D28FAF0203CF5D1005FACC3 /* LaunchScreen.storyboard in Resources */,
+				961D59F32066D28300FC015E /* OpenSans-ExtraBoldItalic.ttf in Resources */,
 				8D1EEE10205331EB008E8C2D /* Checked.png in Resources */,
 				8DE451BE2045028200E60C74 /* camera-7.png in Resources */,
 				8DE451DF2045039500E60C74 /* keyboard-7.png in Resources */,
@@ -468,15 +510,20 @@
 				8D28FAED203CF5D1005FACC3 /* Assets.xcassets in Resources */,
 				8DE451D92045039500E60C74 /* connect-arrow-up-7.png in Resources */,
 				8D8724092056D69C0056C654 /* profile-placeholder.png in Resources */,
+				961D59F52066D28300FC015E /* OpenSans-ExtraBold.ttf in Resources */,
+				961D59F42066D28300FC015E /* OpenSans-SemiBold.ttf in Resources */,
 				8D1EEE14205331EB008E8C2D /* Unchecked@2x.png in Resources */,
 				8DE451D32045039500E60C74 /* box-incoming-7.png in Resources */,
 				8DE451DB2045039500E60C74 /* email-7.png in Resources */,
 				8DE451D62045039500E60C74 /* circle-user-7.png in Resources */,
 				8DE451D42045039500E60C74 /* box-outgoing-7.png in Resources */,
 				8D1EEE11205331EB008E8C2D /* Checked@2x.png in Resources */,
+				961D59F72066D28300FC015E /* OpenSans-Italic.ttf in Resources */,
+				961D59F62066D28300FC015E /* OpenSans-Bold.ttf in Resources */,
 				8D8724062055F7170056C654 /* post-placeholder.png in Resources */,
 				8DE451E62045039500E60C74 /* upload-7.png in Resources */,
 				8DE451DE2045039500E60C74 /* home-7.png in Resources */,
+				961D59F82066D28300FC015E /* OpenSans-Regular.ttf in Resources */,
 				8DE451BC2045022600E60C74 /* iconbeast lite 200 - png in Resources */,
 				8D1EEE15205331EB008E8C2D /* Unchecked@3x.png in Resources */,
 				8D28FAEB203CF5D1005FACC3 /* Main.storyboard in Resources */,
@@ -486,6 +533,7 @@
 				961D59E520653A1B00FC015E /* search-7.png in Resources */,
 				8D1EEE12205331EB008E8C2D /* Checked@3x.png in Resources */,
 				8DE451E52045039500E60C74 /* update-7.png in Resources */,
+				961D59F92066D28300FC015E /* OpenSans-Light.ttf in Resources */,
 				8DE451D52045039500E60C74 /* character-e-7.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
