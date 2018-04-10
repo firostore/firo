@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import Firebase
 
 class DetailsViewController: UIViewController {
     
@@ -24,7 +25,7 @@ class DetailsViewController: UIViewController {
 //    var locationValue: String!
     
     var post = PFObject(className: "Post")
-
+    var currentUser = ""
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -113,12 +114,10 @@ class DetailsViewController: UIViewController {
 
     }
     
-    @IBAction func contactSeller(_ sender: Any) {
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.inWatchList = false
         
         let watchPostQuery = PFQuery(className: "WatchList") //Retrieves the watch list and updates watch arrays with respective values
@@ -195,6 +194,57 @@ class DetailsViewController: UIViewController {
         })
         // Do any additional setup after loading the view.
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { //called anytime a segue is called
+        
+
+        if segue.identifier == "createMessage"{
+            
+            print(segue.destination)
+            if let dest = segue.destination as? ChatViewController{
+                
+//                let messageDB = Database.database().reference().child("Messages/\(currentUser)")
+//                
+//                messageDB.observeSingleEvent(of: .value, with: { (snapshot) in
+//                    print(self.userText.text!)
+//                    if snapshot.hasChild(self.userText.text!){
+                
+                        dest.otherUser = self.userText.text!
+                        dest.currentUser = (Auth.auth().currentUser?.uid)!
+                        
+//                    }else{
+//
+//                        messages.child(self.userText.text!).child("messages")
+//                    }
+//
+//
+//                })
+                
+//                dest.conversationId = conversationIds[index.row]
+                
+            }
+        }
+    }
+    
+    @IBAction func contactSeller(_ sender: Any) {
+        if Auth.auth().currentUser != nil {
+            performSegue(withIdentifier: "createMessage", sender: self)
+        } else {
+            //User Not logged in
+            print("not logged in") //perform login segue
+        }
+    }
+    @IBAction func contactUser(_ sender: Any) {
+        if Auth.auth().currentUser != nil {
+            performSegue(withIdentifier: "MessageDetail", sender: self)
+        } else {
+            //User Not logged in
+            print("not logged in") //perform login segue
+        }
+    }
+    
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

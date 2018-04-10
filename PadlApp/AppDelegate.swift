@@ -8,7 +8,10 @@
 
 import UIKit
 import Parse
-let themeColor = UIColor(red: 0.01, green: 0.41, blue: 0.22, alpha: 1.0) //greenish color
+import Firebase
+import FirebaseStorage
+
+let themeColor = UIColor(red: 90.0/255.0, green: 200.0/255.0, blue: 255.0/255.0, alpha: 1.0) //greenish color
 
 
 @UIApplicationMain
@@ -27,8 +30,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Parse.initialize(with:configuration)
         
+        FirebaseApp.configure()
+    
+        let storage = Storage.storage()
+//        let myDatabase = Database.database().reference()
+//
+//        myDatabase.setValue("My data")
+        
         window?.tintColor = themeColor //sets general UI theme color to themeColor
 
+        let BarButtonItemAppearance = UIBarButtonItem.appearance()
+    BarButtonItemAppearance.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.clear], for: .normal)
         
         // Override point for customization after application launch.
         return true

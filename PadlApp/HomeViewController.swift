@@ -116,6 +116,10 @@ class HomeViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        for i in [1,2,3,4] {
+            print(String(format: "%06X%06X", arc4random_uniform(UInt32(UInt16.max)), arc4random_uniform(UInt32(UInt16.max))))
+        }
 //        collectionView.setContentInset
         //Creates refresher for view, calls the addItem() method every time
         let refresh = UIRefreshControl()

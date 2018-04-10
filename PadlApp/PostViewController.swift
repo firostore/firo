@@ -9,6 +9,9 @@
 import UIKit
 import Parse
 import QuartzCore
+import FirebaseStorage
+//import ImagePicker
+//import Lightbox
 
 class PostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
@@ -28,12 +31,9 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
     var category: String!
     
     @IBOutlet weak var conditionLabel: UILabel!
-    @IBOutlet weak var conditionArrow: UIImageView!
 
     @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var locationArrow: UIImageView!
     
-    @IBOutlet weak var categoryArrow: UIImageView!
     @IBOutlet weak var categoryLabel: UILabel!
     
     @IBAction func unwindSegue(_ sender: UIStoryboardSegue) {
@@ -58,14 +58,41 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
         
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        
+
         imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        
+
         imagePicker.allowsEditing = false
-        
+
         self.present(imagePicker, animated: true, completion: nil)
-        
     }
+//        let imagePicker = ImagePickerController(configuration: config)
+//        imagePicker.delegate = self
+//
+//        present(imagePicker, animated: true, completion: nil)
+//    }
+//
+//    // MARK: - ImagePickerDelegate
+//
+//    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+//        imagePicker.dismiss(animated: true, completion: nil)
+//    }
+//
+//    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+//        guard images.count > 0 else { return }
+//
+//        let lightboxImages = images.map {
+//            return LightboxImage(image: $0)
+//        }
+//
+//        let lightbox = LightboxController(images: lightboxImages, startIndex: 0)
+//        imagePicker.present(lightbox, animated: true, completion: nil)
+//    }
+//
+//    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+//        imagePicker.dismiss(animated: true, completion: nil)
+//    }
+//
+    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -115,6 +142,23 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
             post["location"] = locationLabel.text
             
             post["offers"] = acceptsOffers.isOn
+            
+            let storageRef = Storage.storage().reference(withPath: "postPictures/post1.jpg")
+            let uploadMeta = StorageMetadata()
+            uploadMeta.contentType = "image/jpeg"
+            
+            if let imageData = UIImageJPEGRepresentation(image, 0.8) {
+            
+                storageRef.putData(imageData, metadata: uploadMeta) { (metadata, error) in
+                    
+                    if (error != nil) {
+                        print("ERROR")
+                    } else {
+                        print("SUCESS here's url: \(String(describing: metadata?.downloadURL()))")
+                        
+                    }
+                }
+            }
             
             if let imageData = UIImagePNGRepresentation(image) {
                 
@@ -169,17 +213,32 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
             }
         }
     }
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        postDescription.layer.borderColor = UIColor.gray.cgColor
-        postDescription.layer.borderWidth = 1.0
-        postDescription.layer.cornerRadius = 5
+//        self.navigationController?.isNavigationBarHidden = true
+//        postDescription.layer.borderColor = UIColor.gray.cgColor
+//        postDescription.layer.borderWidth = 1.0
         
-        postTitle.layer.borderColor = UIColor.gray.cgColor
-        postTitle.layer.borderWidth = 1.0
-        postTitle.layer.cornerRadius = 5
+//        postButton.layer.borderColor = UIColor.gray.cgColor
+//        postButton.layer.borderWidth = 5.0
+//        postButton.layer.cornerRadius = 10.0
+        let blueSky = UIColor(red: 255, green: 104, blue: 159, alpha: 0.1)
+        postButton.setBackgroundColor(color: blueSky, forState: .highlighted)
+//        self.donateButton.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
+        
+//        postButton.layer.shadowColor = UIColor.black.cgColor
+//        postButton.layer.shadowOffset = CGSize(width: 5, height: 5)
+//        postButton.layer.shadowRadius = 5
+//        postButton.layer.shadowOpacity = 0.3
+//        postDescription.layer.cornerRadius = 5
+//
+//        postTitle.layer.borderColor = UIColor.gray.cgColor
+//        postTitle.layer.borderWidth = 3.0
+//        postTitle.layer.cornerRadius = 5
         
         let tapCondition = UITapGestureRecognizer(target: self, action: #selector(PostViewController.chooseCondition))
         let tapCategory = UITapGestureRecognizer(target: self, action: #selector(PostViewController.chooseCategory))
@@ -191,6 +250,11 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
         
         //sets textfield delegate to self
         postTitle.delegate = self
+        
+        //lets textfield resize according to content
+//        postDescription.translatesAutoresizingMaskIntoConstraints = true
+//        postDescription.sizeToFit()
+//        postDescription.isScrollEnabled = false
         
         //Looks for single or multiple taps.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PostViewController.dismissKeyboard))
@@ -262,3 +326,18 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
     */
 
 }
+
+extension UIButton {
+    
+    func setBackgroundColor(color: UIColor, forState: UIControlState) {
+        
+        UIGraphicsBeginImageContext(CGSize(width: 1, height: 1))
+        UIGraphicsGetCurrentContext()!.setFillColor(color.cgColor)
+        UIGraphicsGetCurrentContext()!.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        let colorImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        self.setBackgroundImage(colorImage, for: forState)
+    }
+}
+

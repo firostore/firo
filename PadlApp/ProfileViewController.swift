@@ -22,8 +22,6 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     @IBAction func contactButton(_ sender: Any) {
     }
     @IBAction func changePassword(_ sender: Any) {
-        
-        performSegue(withIdentifier: "testSegue", sender: self)
 
     }
     

@@ -13,6 +13,7 @@ class UserTableViewController: UITableViewController, UISearchResultsUpdating {
     
     var titles = [""]
     var objectIds = [""]
+    var posts = [PFObject]()
     var isFollowing = ["" : true]
     
     var refresher: UIRefreshControl = UIRefreshControl()
@@ -32,10 +33,11 @@ class UserTableViewController: UITableViewController, UISearchResultsUpdating {
                     for post in posts {
                         var cellText = post["title"] as! String?
                         print("retrieved some posts!!")
-                        if (self.title?.lowercased().contains(searchInput.lowercased()))!{
+                        if (cellText?.lowercased().contains(searchInput.lowercased()))!{
                             print("found one!!")
                             self.titles.append(cellText!)
                             self.objectIds.append(post.objectId!)
+                            self.posts.append(post)
                         } else if searchInput == "" {
 //                            self.titles.append(self.title!)
 //                            self.objectIds.append(post.objectId!)
@@ -107,6 +109,8 @@ class UserTableViewController: UITableViewController, UISearchResultsUpdating {
             
         } else {
 //            updateTable(searchInput: "")
+            titles = []
+            objectIds = []
         }
 //        tableView.reloadData()
     }
@@ -152,9 +156,25 @@ class UserTableViewController: UITableViewController, UISearchResultsUpdating {
         return cell
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { //called anytime a segue is called
+        if segue.identifier == "SearchToDetail"{ //passing values over if the segue is the DetailSegue
+            if let dest = segue.destination as? DetailsViewController,
+                let index = sender as? IndexPath {
+                
+                dest.post = posts[index.row]
+                
+                dest.mainImage = posts[index.row]["imageFile"] as! PFFile
+                
+                
+            }
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { //method called upon clicking within a cell
         
         let cell = tableView.cellForRow(at: indexPath)
+        
+        performSegue(withIdentifier: "SearchToDetail", sender: indexPath)
         
 //        print("clcikeddied")
 //        
