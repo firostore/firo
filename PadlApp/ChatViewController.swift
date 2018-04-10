@@ -1,9 +1,9 @@
 //
-//  ViewController.swift
-//  Flash Chat
+//  ChatViewController.swift
+//  PadlApp
 //
-//  Created by Angela Yu on 29/08/2015.
-//  Copyright (c) 2015 London App Brewery. All rights reserved.
+//  Created by Jason Tang on 4/1/18.
+//  Copyright © 2018 Padl. All rights reserved.
 //
 
 import UIKit
@@ -15,6 +15,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // Declare instance variables here
     var messageArray : [Message] = [Message]()
+    var otherUser = ""
+    var currentUser = ""
+    
+    var conversationId = ""
     
     // We've pre-linked the IBOutlets
     @IBOutlet var heightConstraint: NSLayoutConstraint!
@@ -31,14 +35,17 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         messageTableView.dataSource = self
         
         messageTextfield.delegate = self
-        
+        print("LOADED")
+        print(currentUser)
+        print(conversationId)
         //TODO: Set the tapGesture here:
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         messageTableView.addGestureRecognizer(tapGesture)
 
         //TODO: Register your MessageCell.xib file here:
-        messageTableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "customMessageCell")
+        messageTableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "selfMessageCell")
+        messageTableView.register(UINib(nibName: "OtherMessageCell", bundle: nil), forCellReuseIdentifier: "otherMessageCell")
         
         retrieveMessages()
         configureTableView()
@@ -58,21 +65,33 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "customMessageCell", for: indexPath) as! CustomMessageCell
-        
-        cell.messageBody.text = messageArray[indexPath.row].messageBody
-        cell.senderUsername.text = messageArray[indexPath.row].sender
-        cell.avatarImageView.image = UIImage(named: "profile-placeholder.png")
-        
-        if cell.senderUsername.text == Auth.auth().currentUser?.email as String! {
-            cell.avatarImageView.backgroundColor = UIColor.flatMint()
-            cell.messageBackground.backgroundColor = UIColor.flatGray()
-        } else {
+        if messageArray[indexPath.row].sender == Auth.auth().currentUser?.email {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "selfMessageCell", for: indexPath) as! SelfMessageCell
             
-            cell.avatarImageView.backgroundColor = UIColor.flatRed()
-            cell.messageBackground.backgroundColor = UIColor.flatPlum()
+            cell.messageBody.text = messageArray[indexPath.row].messageBody
+            //        cell.senderUsername.text = messageArray[indexPath.row].sender
+            cell.avatarImageView.image = UIImage(named: "profile-placeholder.png")
+            
+            //        if cell.senderUsername.text == Auth.auth().currentUser?.email as String! {
+            //            cell.avatarImageView.backgroundColor = UIColor.flatMint()
+            //            cell.messageBackground.backgroundColor = UIColor.flatGray()
+            //        } else {
+            //
+            //            cell.avatarImageView.backgroundColor = UIColor.flatRed()
+            //            cell.messageBackground.backgroundColor = UIColor.flatPlum()
+            //        }
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "otherMessageCell", for: indexPath) as! OtherMessageCell
+            
+            cell.messageBody.text = messageArray[indexPath.row].messageBody
+            //        cell.senderUsername.text = messageArray[indexPath.row].sender
+            cell.avatarImageView.image = UIImage(named: "profile-placeholder.png")
+            
+            return cell
         }
-        return cell
+        
+        
     }
     
     //TODO: Declare tableViewTapped here:
@@ -86,7 +105,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func configureTableView() {
         messageTableView.rowHeight = UITableViewAutomaticDimension
-        messageTableView.estimatedRowHeight = 120
+        messageTableView.estimatedRowHeight = 40
     }
     
     ///////////////////////////////////////////
@@ -128,11 +147,33 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         messageTextfield.isEnabled = false
         sendButton.isEnabled = false
         
-        let messagesDB = Database.database().reference().child("Messages")
+//        let storage = Storage.storage()
         
-        let messageDictionary = ["Sender": Auth.auth().currentUser?.email, "MessageBody": messageTextfield.text!]
+        let messagesDB = Database.database().reference().child("Messages/\(currentUser)/\(otherUser)/messages")
+        
+        let messagesDB2 = Database.database().reference().child("Messages/\(otherUser)/\(currentUser)/messages")
+        
+        let date_stamp = getTodayString()
+
+        let messageDictionary = ["Sender": Auth.auth().currentUser?.email, "MessageBody": messageTextfield.text!, "Time": date_stamp]
         
         messagesDB.childByAutoId().setValue(messageDictionary){
+            (error, reference) in
+            
+            if error != nil {
+                print(error!)
+            } else {
+                print("Message saved successfully")
+            }
+            
+            self.messageTextfield.isEnabled = true
+            self.sendButton.isEnabled = true
+            self.messageTextfield.text = ""
+            
+            
+        }
+        
+        messagesDB2.childByAutoId().setValue(messageDictionary){
             (error, reference) in
             
             if error != nil {
@@ -153,14 +194,35 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    func getTodayString() -> String{
+        
+        let date = Date()
+        
+        let calender = Calendar.current
+        let components = calender.dateComponents([.year,.month,.day,.hour,.minute,.second], from: date)
+        
+        let year = components.year
+        let month = components.month
+        let day = components.day
+        let hour = components.hour
+        let minute = components.minute
+        let second = components.second
+        
+        let today_string = String(year!) + "-" + String(month!) + "-" + String(day!) + " " + String(hour!)  + ":" + String(minute!) + ":" +  String(second!)
+        
+        return today_string
+        
+    }
+    
+    
     //TODO: Create the retrieveMessages method here:
     
     func retrieveMessages() {
         
-        let messageDB = Database.database().reference().child("Messages")
+        let messageDB = Database.database().reference().child("Messages/\(currentUser)/\(otherUser)/messages")
         
         messageDB.observe(.childAdded, with: { (snapshot) in
-            
+            print(snapshot)
             let snapshotValue = snapshot.value as! Dictionary<String, String>
             
             let text = snapshotValue["MessageBody"]
@@ -196,3 +258,4 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
 
 }
+

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 
 
@@ -20,7 +21,15 @@ class WelcomeViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        if Auth.auth().currentUser != nil {
+            // User is signed in.
+            performSegue(withIdentifier: "directMessage", sender: self)
+        } else {
+            // No user is signed in.
+            // ...
+        }
+        self.navigationController?.isNavigationBarHidden = true
     
     }
 
